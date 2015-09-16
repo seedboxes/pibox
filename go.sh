@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-#RTORRENT_DEFAULT="/opt/rtorrent"
+#RTORRENT_DEFAULT is defined in the Dockerfile to "/opt/rtorrent"
 p="${RTORRENT_VOLUME:-$RTORRENT_DEFAULT}"
 
 echo " ==> Init rutorrent folder"
@@ -14,8 +14,23 @@ rm -f $p/session/rtorrent.lock
 # ssl setup
 if [[ ! -e $p/ssl.key ]] || [[ ! -e $p/ssl.crt ]]
 then
-  set -x
-  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $p/ssl.key -out $p/ssl.crt -batch
+    # the generated certificate is also a self-signed CA and can be added to you Trusted CA 
+    # in order to get a "green address bar" in your browser and avoid the ssl warning
+    openssl x509 \
+        -req -in <(
+            openssl req \
+                -days 3650 \
+                -newkey rsa:4096 \
+                -nodes \
+                -keyout "$p/ssl.key" \
+                -subj "/C=FR/L=Paris/O=Seedboxes/OU=Pibox/CN=${URL:-"*.hadopibox.com"}"
+            ) \
+        -signkey "$p/ssl.key" -sha256 \
+        -days 3650 \
+        -extfile <(echo -e "basicConstraints=critical,CA:true,pathlen:0") \
+        -out "$p/ssl.crt"
+
+    chmod 400 $p/ssl.key
 fi
 
 sed -i "s,$RTORRENT_DEFAULT,$p,g" /etc/nginx/sites-enabled/rutorrent.conf
