@@ -15,17 +15,18 @@ curl -sSL https://raw.githubusercontent.com/seedboxes/pibox/master/start | bash
 ```
 
 It will do the following for you :
-* Install docker (if needed)
-* Download [seedboxes/pibox](https://registry.hub.docker.com/r/seedboxes/pibox/) docker image
-* Start your `Pibox` with default settings
 
-The UIs are accessible using the IP adress of the host through HTTPS : https://1.2.3.4
-The default username and passwords are : `hadopi`/`fuckyou`
+1. Install docker (if needed)
+2. Download [seedboxes/pibox](https://registry.hub.docker.com/r/seedboxes/pibox/) docker image
+3. Start your `Pibox` with default settings
 
-* [rTorrent](https://rakshasa.github.io/rtorrent/) : A torrent client from commandline (no ui)
-* [ruTorrent](https://github.com/Novik/ruTorrent) : A web front-end ui for `rTorrent`
+The UIs are accessible using the IP adress of the host through HTTPS ( https://1.2.3.4 ) and  default username and password is : `hadopi`/`fuckyou`
+
+You will find :
+
+* [ruTorrent](https://github.com/Novik/ruTorrent) : A web front-end ui for [rTorrent](https://rakshasa.github.io/rtorrent/)
 * [cakebox](https://github.com/Cakebox/cakebox) : A web interface to allows you to browse, watch, manage and share the files
-* [h5ai](https://larsjung.de/h5ai/) : Alternative to `cakebox` (each ones have pros/cons...)
+* [h5ai](https://larsjung.de/h5ai/) : An alternative to `cakebox` (each ones have pros/cons...)
 
 ## Usage
 
