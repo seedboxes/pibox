@@ -1,4 +1,4 @@
-![logo](pibox.png)
+![logo](https://raw.githubusercontent.com/seedboxes/pibox/master/pibox.png)
 
 # seedboxes/pibox
 
@@ -19,12 +19,12 @@ It will do the following for you :
 * Download [seedboxes/pibox](https://registry.hub.docker.com/r/seedboxes/pibox/) image public docker registry
 * Start your pibox
 
-Access [your local download UI](https://localhost/) (default credentials are `hadopi/fuckyou`)
+Then, access [your local download UI](https://localhost/) (default credentials are `hadopi/fuckyou`)
 or [your local streaming UI](https://localhost/stream)
 
 ## Usage
 
-### Start your pibox
+#### Start your pibox
 
 Use your terminal to start your pibox
 ```bash
@@ -34,12 +34,12 @@ docker run --name pibox --restart always -d -p 443:443 -p 6980:6980 -v /home/pib
 Head to [your local download UI](https://localhost/) with `hadopi/fuckyou` as default credentials
 (you can add your torrent file by drag & drop to the web UI)
 
-![Screenshot](rutorrent.png)
+![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/rutorrent.png)
 
 
 When downloads are over, go to [your local streaming UI](https://localhost/stream) (same credentials)
 
-![Screenshot](cakebox.png)
+![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/cakebox.png)
 
 
 *Note: All your downloads are located on your host in `/home/pibox/downloads`*
