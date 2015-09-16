@@ -30,7 +30,7 @@ You will find :
 
 ## Usage
 
-###### Start your pibox
+##### Start your pibox
 
 Use your terminal to start your `Pibox`
 
@@ -45,7 +45,7 @@ Access your the UIs :
 * h5ai : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/h5ai.png)
 
 
-###### Remove your pibox
+##### Remove your pibox
 
 **Safe action** : when you'll start a new `Pibox` with the same params you'll find all your data back
 
@@ -55,7 +55,7 @@ docker rm -f $(docker kill pibox)
 
 ## Advanced usage
 
-###### Custom credentials
+##### Custom credentials
 
 If you want to access your `Pibox` using a **custom username/password** you should :
 
@@ -65,7 +65,7 @@ If you want to access your `Pibox` using a **custom username/password** you shou
 docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent -e PIBOX_USER=myuser -e PIBOX_PASS=mypass seedboxes/pibox
 ```
 
-###### Custom URL
+##### Custom URL
 
 If you want to access your `Pibox` using a **custom url** and **get a green SSL address bar** you should :
 
@@ -77,7 +77,7 @@ rm -f /home/pibox/ssl.crt /home/pibox/ssl.key
 docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent -e URL=pibox.example.com seedboxes/pibox
 ```
 
-###### Custom SSL certificates
+##### Custom SSL certificates
 
 If you want to access your `Pibox` using **your own SSL certificate** (may be because you already have them signed by a known Certificate Authorithy) you should :
 
