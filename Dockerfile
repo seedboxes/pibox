@@ -7,7 +7,9 @@ MAINTAINER hadopi <hadopibox@gmail.com>
 ENV RUTORRENT_VERSION 3.6
 ENV RTORRENT_VERSION 0.9.2-1
 ENV RTORRENT_DEFAULT /opt/rtorrent
+
 ENV TERM xterm
+ENV DEBIAN_FRONTEND noninteractive
 
 # install tools
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 90BD7EACED8E640A \
