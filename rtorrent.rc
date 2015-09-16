@@ -1,0 +1,40 @@
+download_rate = 0
+upload_rate = 0
+
+max_peers = 100
+
+min_peers_seed = -1
+max_peers_seed = -1
+
+port_range = 6980-6980
+port_random = no
+
+check_hash = yes
+
+# Watch a directory for new torrents
+schedule = watch_directory,5,5,load_start=/opt/rtorrent/watch/*.torrent
+
+# Move files when download is completed
+#system.method.set_key = event.download.finished,move_complete,"execute=mv,-u,$d.get_base_path=,~/torrent_finis/;d.set_directory=~/torrent_finis/"
+
+dht = disable
+# or to handle torrents without trackers (note: dht_port is UDP)
+#dht = auto
+#dht_port = 6880
+
+#encryption = allow_incoming,require,require_rc4
+encryption = allow_incoming,try_outgoing,enable_retry
+
+peer_exchange = no
+
+scgi_port = 127.0.0.1:5000
+directory = /opt/rtorrent/share
+session = /opt/rtorrent/session
+
+encoding_list = UTF-8
+log.open_file = "rtorrent", /opt/rtorrent/rtorrent.log
+log.add_output = "storage_info", "rtorrent"
+
+use_udp_trackers = yes
+
+#system.file_allocate.set = yes

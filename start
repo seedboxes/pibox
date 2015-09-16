@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# install docker if needed
+command -v docker || curl http://get.docker.com/ | sudo bash
+
+# download seedboxes/pibox image
+docker pull seedboxes/pibox
+
+# remove existing pibox if any
+docker rm -f $(docker kill hadopibox) 2>/dev/null
+
+# start the pibox with default settings
+docker run --name pibox --restart always -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent seedboxes/pibox
+
+# the end
+echo "Now open your browser to this location : https://localhost/"
