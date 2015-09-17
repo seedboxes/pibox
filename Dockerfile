@@ -73,11 +73,11 @@ RUN apt-get clean \
 
 # setup =======================================================================
 
-ADD rutorrent.conf /etc/nginx/sites-available/
-ADD go.sh /go.sh
-ADD rtorrent.rc /root/.rtorrent.rc
-ADD supervisord.conf /etc/supervisor/conf.d/seedbox.conf
-ADD background.jpg /var/www/cakebox/public/ressources/images/bg-foodcupcake.jpg
+ADD src/rutorrent.conf /etc/nginx/sites-available/
+ADD src/go.sh /go.sh
+ADD src/rtorrent.rc /root/.rtorrent.rc
+ADD src/supervisord.conf /etc/supervisor/conf.d/seedbox.conf
+ADD src/background.jpg /var/www/cakebox/public/ressources/images/bg-foodcupcake.jpg
 
 # nginx
 RUN ln -s /etc/nginx/sites-available/rutorrent.conf /etc/nginx/sites-enabled \

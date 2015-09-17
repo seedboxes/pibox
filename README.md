@@ -1,4 +1,4 @@
-![logo](https://raw.githubusercontent.com/seedboxes/pibox/master/pibox.png)
+![logo](https://raw.githubusercontent.com/seedboxes/pibox/master/img/pibox.png)
 
 # seedboxes/pibox
 
@@ -40,9 +40,9 @@ docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent 
 ```
 
 Access your the UIs :
-* ruTorrent : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/rutorrent.png)
-* Cakebox : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/cakebox.png)
-* h5ai : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/h5ai.png)
+* ruTorrent : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/rutorrent.png)
+* Cakebox : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/cakebox.png)
+* h5ai : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/h5ai.png)
 
 
 ##### Remove your pibox
