@@ -7,7 +7,7 @@ command -v docker || curl http://get.docker.com/ | sudo bash
 docker pull seedboxes/pibox
 
 # remove existing pibox if any
-docker rm -f $(docker kill hadopibox) 2>/dev/null
+docker rm -f $(docker kill pibox) 2>/dev/null
 
 # start the pibox with default settings
 docker run --name pibox --restart always -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent seedboxes/pibox
