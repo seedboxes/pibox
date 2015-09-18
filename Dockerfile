@@ -99,7 +99,7 @@ RUN mkdir -p ${RTORRENT_DEFAULT}/share \
         && chown -R www-data:www-data /var/www
 
 #EXPOSE 443 5200 6980
-VOLUME ["${RTORRENT_DEFAULT}"]
+#VOLUME ["${RTORRENT_DEFAULT}"]
 CMD ["/go.sh"]
 
 # sources can be found here:
