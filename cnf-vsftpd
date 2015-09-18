@@ -1,0 +1,44 @@
+# READ THIS: This example file is NOT an exhaustive list of vsftpd options.
+# Please read the vsftpd.conf.5 manual page to get a full idea of vsftpd's
+# capabilities.
+
+# standalone mode =============================================================
+
+listen=YES
+listen_ipv6=NO
+
+# non-anonymous users =========================================================
+
+local_enable=YES
+local_root=/opt/rtorrent/share
+pam_service_name=vsftpd
+write_enable=YES
+
+# map non-anonymous users to an actual system account
+guest_enable=YES
+guest_username=rtorrent
+
+# anonymous users =============================================================
+
+anonymous_enable=NO
+anon_upload_enable=NO
+anon_mkdir_write_enable=NO
+anon_other_write_enable=NO
+
+# SSL =========================================================================
+
+ssl_enable=NO
+rsa_cert_file=/opt/rtorrent/ssl.crt
+rsa_private_key_file=/opt/rtorrent/ssl.key
+
+# chroot related ==============================================================
+
+secure_chroot_dir=/var/run/vsftpd/empty
+allow_writeable_chroot=YES
+
+# some customization ==========================================================
+
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES

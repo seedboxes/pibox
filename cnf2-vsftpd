@@ -1,0 +1,15 @@
+listen=NO
+listen_ipv6=YES
+
+seccomp_sandbox=NO
+anonymous_enable=YES
+local_enable=YES
+write_enable=YES
+dirmessage_enable=NO
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=NO
+log_ftp_protocol=YES
+chroot_local_user=YES
+secure_chroot_dir=/var/run/vsftpd/empty

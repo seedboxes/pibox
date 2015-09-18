@@ -1,0 +1,7 @@
+# Standard behaviour for ftpd(8).
+#auth    required    pam_listfile.so item=user sense=deny file=/etc/ftpusers onerr=succeed
+
+# inspired by Scaleway work but here we want to
+# authenticate against the htpasswd file generated at startup
+auth     required    pam_pwdfile.so pwdfile=/opt/rtorrent/.htpasswd
+account  sufficient  pam_permit.so
