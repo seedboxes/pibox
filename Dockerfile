@@ -80,6 +80,7 @@ ADD src/supervisord.conf /etc/supervisor/conf.d/seedbox.conf
 ADD src/background.jpg /var/www/cakebox/public/ressources/images/bg-foodcupcake.jpg
 ADD src/index.html /var/www/index.html
 ADD src/favicon.ico /var/www/favicon.ico
+ADD src/cover.css /var/www/cover.css
 
 # nginx
 RUN ln -s /etc/nginx/sites-available/rutorrent.conf /etc/nginx/sites-enabled \
