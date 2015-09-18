@@ -11,7 +11,7 @@ A `Pibox` is a SSL-enabled, pre-configured and highly customizable [seedbox](htt
 ## Quick Start
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/seedboxes/pibox/master/start | bash
+curl -sSL https://raw.githubusercontent.com/seedboxes/pibox/master/bin/start | bash
 ```
 
 It will do the following for you :
