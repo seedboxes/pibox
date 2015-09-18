@@ -23,7 +23,7 @@ RUN apt-get install -y vim curl \
         software-properties-common python-software-properties build-essential \
         supervisor nginx php5-cli php5-fpm php5-gd \
         zip unzip unrar-free \
-        mediainfo imagemagick libav-tools ffmpeg
+        mediainfo imagemagick ffmpeg
 
 # install rtorrent ============================================================
 
@@ -65,13 +65,6 @@ RUN curl -sSL http://release.larsjung.de/h5ai/h5ai-$H5AI_VERSION.zip -o /tmp/h5a
         && unzip /tmp/h5ai.zip -d /var/www/ \
         && rm -f /tmp/h5ai.zip \
         && ln -s ${RTORRENT_DEFAULT}/share /var/www/downloads
-
-# install vsftpd ==============================================================
-
-RUN apt-get install -y vsftpd libpam-pwdfile
-ADD pam-vsftpd /etc/pam.d/vsftpd
-ADD cnf2-vsftpd /etc/vsftpd.conf
-RUN mkdir -p /var/run/vsftpd/empty
 
 # cleanup =====================================================================
 
