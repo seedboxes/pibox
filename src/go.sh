@@ -41,14 +41,16 @@ sed -i "s,$RTORRENT_DEFAULT,$p,g" /root/.rtorrent.rc
 
 #=== FTP ===#
 
-if [ ! -z "${PIBOX_FTPIP}" ]
+if [ ! -z "${PIBOX_FTP}" ] && [ "${PIBOX_FTP}" = "yes" ]
 then
     echo "${PIBOX_PASS:-"fuckyou"}" >  /tmp/in 
     echo "${PIBOX_PASS:-"fuckyou"}" >> /tmp/in 
     pure-pw useradd "${PIBOX_USER:-"hadopi"}" -d "$p/share" -u ftpuser -m < /tmp/in
     pure-pw mkdb
     
-    /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P ${PIBOX_FTPIP} -p 30000:30009
+    sed -i "s,PIBOX_PUBLICIP,${PIBOX_PUBLICIP}," /etc/supervisor/conf.d/ftp.conf
+else
+    mv /etc/supervisor/conf.d/ftp.{conf,inactive}
 fi
 
 supervisord -n
