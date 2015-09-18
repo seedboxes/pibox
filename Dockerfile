@@ -66,21 +66,40 @@ RUN curl -sSL http://release.larsjung.de/h5ai/h5ai-$H5AI_VERSION.zip -o /tmp/h5a
         && rm -f /tmp/h5ai.zip \
         && ln -s ${RTORRENT_DEFAULT}/share /var/www/downloads
 
+# install pure-ftpd ===========================================================
+
+# install dependencies
+RUN apt-get -y build-dep pure-ftpd
+
+# build from source
+RUN mkdir /tmp/pure-ftpd/ \
+        && cd /tmp/pure-ftpd/ \
+        && apt-get source pure-ftpd \
+        && cd pure-ftpd-* \
+        && sed -i '/^optflags=/ s/$/ --without-capabilities/g' ./debian/rules \
+        && dpkg-buildpackage -b -uc
+
+# install the new deb files
+RUN dpkg -i /tmp/pure-ftpd/pure-ftpd-common*.deb \
+        && apt-get -y install openbsd-inetd \
+        && dpkg -i /tmp/pure-ftpd/pure-ftpd_*.deb
+
+# Prevent pure-ftpd upgrading
+RUN apt-mark hold pure-ftpd pure-ftpd-common
+
+# setup ftpgroup and ftpuser
+RUN groupadd ftpgroup \
+        && useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+
 # cleanup =====================================================================
 
 RUN apt-get clean \
+        && rm -rf /tmp/pure-ftpd/ \
         && rm -rf /var/lib/apt/lists/*
 
 # setup =======================================================================
 
-ADD src/rutorrent.conf /etc/nginx/sites-available/
-ADD src/go.sh /go.sh
-ADD src/rtorrent.rc /root/.rtorrent.rc
-ADD src/supervisord.conf /etc/supervisor/conf.d/seedbox.conf
-ADD src/background.jpg /var/www/cakebox/public/ressources/images/bg-foodcupcake.jpg
-ADD src/index.html /var/www/index.html
-ADD src/favicon.ico /var/www/favicon.ico
-ADD src/cover.css /var/www/cover.css
+ADD src /
 
 # nginx
 RUN ln -s /etc/nginx/sites-available/rutorrent.conf /etc/nginx/sites-enabled \
@@ -91,8 +110,8 @@ RUN mkdir -p ${RTORRENT_DEFAULT}/share \
         && mkdir -p ${RTORRENT_DEFAULT}/session \
         && chown -R www-data:www-data /var/www
 
-#EXPOSE 443 5200 6980
-#VOLUME ["${RTORRENT_DEFAULT}"]
+EXPOSE 30000-30009
+
 CMD ["/go.sh"]
 
 # sources can be found here:

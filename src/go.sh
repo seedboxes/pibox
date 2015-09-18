@@ -38,4 +38,17 @@ sed -i "s,$RTORRENT_DEFAULT,$p,g" /root/.rtorrent.rc
 
 /etc/init.d/php5-fpm start
 /etc/init.d/nginx start
+
+#=== FTP ===#
+
+if [ ! -z "${PIBOX_FTPIP}" ]
+then
+    echo "${PIBOX_PASS:-"fuckyou"}" >  /tmp/in 
+    echo "${PIBOX_PASS:-"fuckyou"}" >> /tmp/in 
+    pure-pw useradd "${PIBOX_USER:-"hadopi"}" -d "$p/share" -u ftpuser -m < /tmp/in
+    pure-pw mkdb
+    
+    /usr/sbin/pure-ftpd -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P ${PIBOX_FTPIP} -p 30000:30009
+fi
+
 supervisord -n
