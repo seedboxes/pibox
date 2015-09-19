@@ -43,17 +43,24 @@ It will do the following for you :
 
 ## Pibox Management
 
-Clone this repo and manage your `Pibox` with the unix standard `make` command.
+Clone this repo and manage your `Pibox` with standard unix `make` command.
 
 ```bash
 git clone https://github.com/seedboxes/pibox.git
 cd pibox
 
 # start your Pibox
+
 make run
 
-# once your done you can securely trash it
-# (all downloaded data, authentication informations, ssl certificates... are kept and retrieved on next run)
+# << 
+# Enjoy your Pibox here ;)
+# Open your web browser, download torrent, upload file to FTP, etc...
+# >>
+
+# once you're done you can securely trash it 
+# all data (uploads, certs...) are kept and will be retrieved on next `make run`
+
 make rm
 ```
 
