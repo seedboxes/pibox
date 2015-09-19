@@ -112,9 +112,7 @@ RUN mkdir -p ${RTORRENT_DEFAULT}/share \
 
 EXPOSE 30000-30009
 
-CMD ["/go.sh"]
+RUN useradd -m -d /home/pibox -m pibox -s "/bin/bash" \
+        && chown -R pibox:pibox /var/log/supervisor
 
-# sources can be found here:
-#https://github.com/Novik/ruTorrent/archive/rutorrent.tar.gz
-#https://github.com/Novik/ruTorrent/archive/plugins.tar.gz
-#https://github.com/rakshasa/rtorrent/archive/0.9.4.tar.gz
+CMD ["/go.sh"]
