@@ -4,11 +4,13 @@
 
 ## Description
 
-A `Pibox` is a SSL-enabled, pre-configured and highly customizable [seedbox](http://github.com/seedboxes/pibox) using [Docker](http://docker.com) technology.
+**`Pibox` is your SSL-enabled, pre-configured and highly customizable [seedbox](http://github.com/seedboxes/pibox)**
 
-**Persitant data** : Spin up the `Pibox` on your *linux* server, upload your torrents, get your downloads and delete the seedbox without loosing your data (!)
+*Persitant data : Spin up the `Pibox` on your **linux** server, upload your torrents, get your downloads and delete the seedbox without loosing your data (!)*
 
-## Quick Start
+## Instant Start
+
+To instantly create a seedbox on you linux server :
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/seedboxes/pibox/master/bin/start | bash
@@ -18,76 +20,70 @@ It will do the following for you :
 
 1. Install docker (if needed)
 2. Download [seedboxes/pibox](https://registry.hub.docker.com/r/seedboxes/pibox/) docker image
-3. Start your `Pibox` with default settings
-
-The UIs are accessible using the IP adress of the host through HTTPS ( https://1.2.3.4 ) and  default username and password is : `hadopi`/`fuckyou`
-
-You will find :
-
-* [ruTorrent](https://github.com/Novik/ruTorrent) : A web front-end ui for [rTorrent](https://rakshasa.github.io/rtorrent/)
-* [cakebox](https://github.com/Cakebox/cakebox) : A web interface to allows you to browse, watch, manage and share the files
-* [h5ai](https://larsjung.de/h5ai/) : An alternative to `cakebox` (each ones have pros/cons...)
+3. Start your `Pibox` with default settings (displayed at startup)
 
 ## Usage
 
-##### Start your pibox
+clone this repo end manage your container with the unix standard `make` command and one of the 
+following argument :
 
-Use your terminal to start your `Pibox`
-
-```bash
-# spin up a new Pibox
-docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent seedboxes/pibox
-```
-
-Access your the UIs :
-* ruTorrent : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/rutorrent.png)
-* Cakebox : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/cakebox.png)
-* h5ai : ![Screenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/h5ai.png)
-
-
-##### Remove your pibox
-
-**Safe action** : when you'll start a new `Pibox` with the same params you'll find all your data back
+* pull : download image from docker hub
+* rm : remove existing `Pibox` if any
+* run : create and start a new `Pibox`
+* logs : show `Pibox` startup logs
+* status : show `Pibox` inner services statuses
+* enter : start a shell inside the `Pibox`
+* adduser : add new user to your `Pibox` for authenticated services *not implemented yet*
+* deluser : delete existing user *not implemented yet*
+* showusers : display all existing users *not implemented yet*
 
 ```bash
-docker rm -f $(docker kill pibox)
+git clone https://github.com/seedboxes/pibox.git
+cd pibox
+
+# start your Pibox
+make run
+
+# once your done you can securely trash it
+# (all downloaded data, authentication informations, ssl certificates... are kept and retrieved on next run)
+make rm
 ```
+
+## Features
+
+0.1.0 :
+
+* ruTorrent : WebUI for rtorrent client (nice feature: drag&drop your torrent)
+* Cakebox : Stream/Download your files through HTTP
+
+0.2.0 :
+
+* h5ai : Manage your files (nice feature : archive+download selected items)
+
+0.3.0 :
+
+* FTP server : Upload/Download your files through FTP
 
 ## Advanced usage
 
-##### Custom credentials
+`Pibox` is highly customizable so you can :
 
-If you want to access your `Pibox` using a **custom username/password** you should :
+* Choose `Pibox` version
+* Choose `Pibox` download path
+* Choose `Pibox` container name
+* Custom SSL Certificates (with possible *ssl green address bar*)
+* Use pre-existing SSL Certificates
+* Custom username/password
+* Custom HTTPS port
+* Custom FTP port
+* Enable/Disable FTP at startup
+* ...
 
-- Specify the `-e PIBOX_USER=myuser -e PIBOX_PASS=mypass` environment variables
+##### Configuration file
 
-```bash
-docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent -e PIBOX_USER=myuser -e PIBOX_PASS=mypass seedboxes/pibox
-```
+TODO
 
-##### Custom URL
+##### Examples
 
-If you want to access your `Pibox` using a **custom url** and **get a green SSL address bar** you should :
-
-- Specify the `-e URL=pibox.example.com` environment variable
-- Download the newly generated certificate `/home/pibox/ssl.crt` and add it to the list of your trusted CAs
-
-```bash
-rm -f /home/pibox/ssl.crt /home/pibox/ssl.key
-docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent -e URL=pibox.example.com seedboxes/pibox
-```
-
-##### Custom SSL certificates
-
-If you want to access your `Pibox` using **your own SSL certificate** (may be because you already have them signed by a known Certificate Authorithy) you should :
-
-- Copy the `ssl.crt` certificate and `ssl.key` key to the root volume
-- Start the 
-
-```bash
-cp /example/path/to/certificate.pem /home/pibox/ssl.crt
-cp /example/path/to/privatekey.pem  /home/pibox/ssl.key
-docker run --name pibox -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent seedboxes/pibox
-```
-
+TODO
 
