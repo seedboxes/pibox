@@ -1,16 +1,55 @@
 #!/bin/bash
 
+version=latest
+
 # install docker if needed
 command -v docker || curl http://get.docker.com/ | sudo bash
 
 # download seedboxes/pibox image
-docker pull seedboxes/pibox
+docker pull seedboxes/pibox:$version
 
 # remove existing pibox if any
 docker rm -f $(docker kill pibox) 2>/dev/null
 
+# try to guess host public ip + generate a password 
+HOSTIP="$(ip address show dev eth0 scope global | grep 'inet ' | cut -d'/' -f1 | grep -oE '[0-9\.]*')"
+GENPASS="$(head -c1000 /dev/urandom | tr -dc "0-9A-Za-z" | head -c8)"
+
 # start the pibox with default settings
-docker run --name pibox --restart always -d -p 443:443 -p 6980:6980 -v /home/pibox:/opt/rtorrent seedboxes/pibox
+docker run \
+    -d --name pibox \
+    -v ${HOME}/pibox:/opt/rtorrent \
+    -p 6980:6980 -p 443:443 -p 21:21 -p 30000-30009:30000-30009 \
+    -e PIBOX_FTP=yes -e PIBOX_PUBLICIP="${HOSTIP}" -e PIBOX_PASS="${GENPASS}" \
+       seedboxes/pibox:$version
 
 # the end
-echo "Now open your browser to this location : https://localhost/"
+
+   rst="$(tput sgr0)"
+   bld="$(tput bold)"
+   und="$(tput sgr 0 1)"
+
+   red="$(tput setaf 1)"
+ green="$(tput setaf 2)"
+yellow="$(tput setaf 3)"
+
+bgreen="${bld}${green}"
+
+echo "
+
+                        ${bgreen} __     __   __      ${rst}
+                        ${bgreen}|__) | |__) /  \ \_/ ${rst}
+                   Your ${bgreen}|    | |__) \__/ / \ ${rst}has been created
+    
+           It is accessible through HTTPS and FTP (SFTP coming soon...)
+    
+                      HTTPS access : ${yellow}https://$HOSTIP/${rst}
+                        FTP access : ${yellow}ftp://$HOSTIP/${rst}
+    
+              Your credentials are printed ${und}just once${rst} below so keep
+                   it mind or in a safe place for later use :
+    
+                                 user : ${red}hadopi${rst}
+                             password : ${red}${GENPASS}${rst}
+
+"
