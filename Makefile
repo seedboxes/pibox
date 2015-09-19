@@ -1,4 +1,4 @@
-.PHONY: pull rm run logs enter
+.PHONY: pull rm run logs status enter adduser deluser showusers
 
 HOST_USER      := $(shell whoami)
 HOST_IP        := $(shell ip address show dev eth0 scope global | grep 'inet ' | cut -d'/' -f1 | grep -oE '[0-9\.]*')
@@ -74,5 +74,14 @@ status:
 	@docker exec $(PIBOX_NAME) supervisorctl status
 
 enter:
-	@docker exec -ti $(PIBOX_NAME) sh -c "export TERM=xterm && bash"
+	@docker exec -ti $(PIBOX_NAME) /bin/bash
+
+adduser:
+	@docker exec ${PIBOX_NAME} /bin/true
+
+deluser:
+	@docker exec ${PIBOX_NAME} /bin/true
+
+showusers:
+	@docker exec ${PIBOX_NAME} /bin/true
 
