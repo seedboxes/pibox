@@ -49,13 +49,13 @@ make && source ${HOME}/.profile
 ```
 #### Usage
 
-Just type `pibox` **from within the repo folder** to display a comprehensive help :
+Just type `pibox` **from within the repo folder** to display a comprehensive help usage :
 
 ![PiboxManagerHelpScreenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/piboxmanagerhelp.png)
 
 ## Pibox Advanced Customization
 
-`Pibox` is highly customizable so you can :
+`Pibox` is highly customizable so you can using its simple `pibox.conf` file.
 
 * Choose `Pibox` version
 * Choose the download path
@@ -70,7 +70,7 @@ Just type `pibox` **from within the repo folder** to display a comprehensive hel
 * Enable/Disable FTP at startup
 * ...
 
-##### Configuration file
+### Customization Howto
 
 Edit the `pibox.conf` file and set the variables according to your needs (variable names
 should be self explanatory...), and start/restart your `pibox` :
@@ -79,16 +79,13 @@ should be self explanatory...), and start/restart your `pibox` :
 # edit config file
 vi pibox.conf
 
-# load new configuration
-source pibox.conf
-
-# start (restart if same PIBOX_NAME)
-make run
+# (re)start
+pibox run
 ```
 
-##### Examples
+### Customization Examples
 
-###### Bind locally
+#### Bind locally
 
 **The Need**: I want my FTP server to be accessible from localhost only
 
@@ -100,19 +97,18 @@ PIBOX_FTPPORT=127.0.0.1:21
 
 * (Re)start your `pibox` :
 ```bash
-source pibox.conf
-make run
+pibox run
 ```
 
-###### Green SSL address bar
+#### Green SSL address bar
 
-**The Need**: I own the `seedbox.example.com` domain name which point to my server. 
+**The Need**: I own the `seedbox.hadopi.fr` domain name which point to my server. 
 I want the green ssl address bar in my browser.
 
 * Edit the `pibox.conf` file:
 ```
 PIBOX_HTTPPORT=443
-PIBOX_URL=seedbox.example.com
+PIBOX_URL=seedbox.hadopi.fr
 ```
 
 * Remove existing SSL certificate (if any):
@@ -123,22 +119,24 @@ rm -f $PIBOX_PATH/ssl.crt
 
 * (Re)start your `pibox`:
 ```bash
-make run
+pibox run
 ```
 
 * Download the SSL certificate to your computer (located in `$PIBOX\_PATH/ssl.crt`
 
 * Import the certificate in the list of your trusted CA
 
-* Open your browser and head to `https://seedbox.example.com`
+* Open your browser and head to `https://seedbox.hadopi.fr`
 
-###### I want to rename my pibox
+![GreenSSLAddessBarScreenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/greenssladdressbar.png)
+
+#### I want to rename my pibox
 
 **The Need**: I have a already running pibox and I want to rename it.
 
 * First stop your running pibox:
 ```bash
-make rm
+pibox rm
 ```
 
 * Edit the `pibox.conf` file:
@@ -149,5 +147,5 @@ PIBOX_NAME=mycustompiboxname
 
 * Start your new pibox:
 ```bash
-make run
+pibox run
 ```
