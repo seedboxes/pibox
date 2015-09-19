@@ -89,7 +89,7 @@ then
                 -newkey rsa:4096 \
                 -nodes \
                 -keyout "$p/ssl.key" \
-                -subj "/C=FR/L=Paris/O=Seedboxes/OU=Pibox/CN=${URL:-"*.hadopibox.com"}"
+                -subj "/C=FR/L=Paris/O=Seedboxes/OU=Pibox/CN=${URL:-"localhost"}"
             ) \
         -signkey "$p/ssl.key" -sha256 \
         -days 3650 \

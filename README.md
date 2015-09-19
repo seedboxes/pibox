@@ -24,75 +24,130 @@ It will do the following for you :
 
 ![LandingPageScreenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/httplandingpage.png)
 
-0.1.0 :
+0.3.0 :
 
-* ruTorrent : WebUI for rtorrent client (nice feature: drag&drop your torrent)
-* Cakebox : Stream/Download your files through HTTP
+* pure-ftpd : Upload/Download your files via this FTP server
 
 0.2.0 :
 
 * h5ai : Manage your files (nice feature : archive+download selected items)
 
-0.3.0 :
+0.1.0 :
 
-* pure-ftpd : Upload/Download your files via this FTP server
+* ruTorrent : WebUI for rtorrent client (nice feature: drag&drop your torrent)
+* Cakebox : Stream/Download your files through HTTP
 
-## Pibox Management
+## Pibox Manager
 
-Clone this repo and manage your `Pibox` with standard unix `make` command.
+Clone this repo and *install* your `Pibox Manager` (simple pibox alias, 
+that won't mess your configuration).
 
 ```bash
 git clone https://github.com/seedboxes/pibox.git
 cd pibox
-
-# start your Pibox
-
-make run
-
-# << 
-# Enjoy your Pibox here ;)
-# Open your web browser, download torrent, upload file to FTP, etc...
-# >>
-
-# once you're done you can securely trash it 
-# all data (uploads, certs...) are kept and will be retrieved on next `make run`
-
-make rm
+make && source ${HOME}/.profile
 ```
+#### Usage
 
-Available actions are listed below :
+Just type `pibox` **from within the repo folder** to display a comprehensive help :
 
-* pull : download image from docker hub
-* rm : remove existing `Pibox` if any
-* run : create and start a new `Pibox`
-* logs : show `Pibox` startup logs
-* status : show `Pibox` inner services statuses
-* enter : start a shell inside the `Pibox`
-* adduser : add new user to your `Pibox` for authenticated services *not implemented yet*
-* deluser : delete existing user *not implemented yet*
-* showusers : display all existing users *not implemented yet*
-
+![PiboxManagerHelpScreenshot](https://raw.githubusercontent.com/seedboxes/pibox/master/img/piboxmanagerhelp.png)
 
 ## Pibox Advanced Customization
 
 `Pibox` is highly customizable so you can :
 
 * Choose `Pibox` version
-* Choose `Pibox` download path
-* Choose `Pibox` container name
-* Custom SSL Certificates (with possible *ssl green address bar*)
+* Choose the download path
+* Choose the container name
+* Choose the CN of your SSL Certificates (and possibly get *ssl green address bar* -- see example below)
 * Use pre-existing SSL Certificates
-* Custom username/password
-* Custom HTTPS port
-* Custom FTP port
+* Customize default username/password
+* Customize HTTPS port
+* Customize FTP port
+* Customize HTTPS binded IP
+* Customize FTP binded IP
 * Enable/Disable FTP at startup
 * ...
 
 ##### Configuration file
 
-TODO
+Edit the `pibox.conf` file and set the variables according to your needs (variable names
+should be self explanatory...), and start/restart your `pibox` :
+
+```bash
+# edit config file
+vi pibox.conf
+
+# load new configuration
+source pibox.conf
+
+# start (restart if same PIBOX_NAME)
+make run
+```
 
 ##### Examples
 
-TODO
+###### Bind locally
 
+**The Need**: I want my FTP server to be accessible from localhost only
+
+* Edit the `pibox.conf` file:
+```
+PIBOX_FTP=yes
+PIBOX_FTPPORT=127.0.0.1:21
+```
+
+* (Re)start your `pibox` :
+```bash
+source pibox.conf
+make run
+```
+
+###### Green SSL address bar
+
+**The Need**: I own the `seedbox.example.com` domain name which point to my server. 
+I want the green ssl address bar in my browser.
+
+* Edit the `pibox.conf` file:
+```
+PIBOX_HTTPPORT=443
+PIBOX_URL=seedbox.example.com
+```
+
+* Remove existing SSL certificate (if any):
+```bash
+source pibox.conf
+rm -f $PIBOX_PATH/ssl.crt
+```
+
+* (Re)start your `pibox`:
+```bash
+make run
+```
+
+* Download the SSL certificate to your computer (located in `$PIBOX\_PATH/ssl.crt`
+
+* Import the certificate in the list of your trusted CA
+
+* Open your browser and head to `https://seedbox.example.com`
+
+###### I want to rename my pibox
+
+**The Need**: I have a already running pibox and I want to rename it.
+
+* First stop your running pibox:
+```bash
+make rm
+```
+
+* Edit the `pibox.conf` file:
+```
+PIBOX_NAME=mycustompiboxname
+```
+
+
+* Start your new pibox:
+```bash
+make run
+```
