@@ -9,7 +9,11 @@ command -v docker || curl http://get.docker.com/ | sudo bash
 docker pull seedboxes/pibox:$version
 
 # remove existing pibox if any
-docker rm -f $(docker kill pibox) 2>/dev/null
+if [ `docker ps -aq --filter="name=pibox" | wc -l` -eq 1 ]
+then 
+    echo -n "Removing container "
+    docker rm -f `docker kill $(PIBOX_NAME)`
+fi
 
 # try to guess host public ip + generate a password 
 HOSTIP="$(ip address show dev eth0 scope global | grep 'inet ' | cut -d'/' -f1 | grep -oE '[0-9\.]*')"
