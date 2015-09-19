@@ -1,10 +1,6 @@
 ![logo](https://raw.githubusercontent.com/seedboxes/pibox/master/img/pibox.png)
 
-# seedboxes/pibox
-
-## Description
-
-**`Pibox` is your SSL-enabled, pre-configured and highly customizable [seedbox](http://github.com/seedboxes/pibox)**
+**`Pibox` is your ssl-enabled, pre-configured and highly customizable [seedbox](http://github.com/seedboxes/pibox)**
 
 *Persitant data : Spin up the `Pibox` on your* **linux** *server, upload your torrents, get your downloads and delete the seedbox without loosing your data (!)*
 
