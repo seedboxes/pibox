@@ -55,7 +55,7 @@ Just type `pibox` **from within the repo folder** to display a comprehensive hel
 
 ## Pibox Advanced Customization
 
-`Pibox` is highly customizable so you can using its simple `pibox.conf` file.
+`Pibox` is highly customizable can using its simple `pibox.conf` file.
 
 * Choose `Pibox` version
 * Choose the download path
