@@ -22,8 +22,8 @@ dht = disable
 #dht = auto
 #dht_port = 6880
 
-#encryption = allow_incoming,require,require_rc4
-encryption = allow_incoming,try_outgoing,enable_retry
+encryption = allow_incoming,require,require_rc4
+#encryption = allow_incoming,try_outgoing,enable_retry
 
 peer_exchange = no
 
