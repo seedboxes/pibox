@@ -77,29 +77,42 @@ fi
 echo
 echo "$bwhite ==> SSL$rst"
 
-if [[ ! -e $p/ssl.key ]] || [[ ! -e $p/ssl.crt ]]
+if [ "${LETSENCRYPT}" = "yes" ]
 then
-    echo -n "   > Creating SSL certificate and key files... "
-    # the generated certificate is also a self-signed CA and can be added to you Trusted CA 
-    # in order to get a "green address bar" in your browser and avoid the ssl warning
-    openssl x509 \
-        -req -in <(
-            openssl req \
-                -days 3650 \
-                -newkey rsa:4096 \
-                -nodes \
-                -keyout "$p/ssl.key" \
-                -subj "/C=FR/L=Paris/O=Seedboxes/OU=Pibox/CN=${URL:-"localhost"}"
-            ) \
-        -signkey "$p/ssl.key" -sha256 \
-        -days 3650 \
-        -extfile <(echo -e "basicConstraints=critical,CA:true,pathlen:0") \
-        -out "$p/ssl.crt"
-    show_result $?
-
-    chmod 400 $p/ssl.key
+	echo -n "   > Running LetsEncrypt certbot... "	
+	wget https://dl.eff.org/certbot-auto -o /certbot-auto
+	chmod a+x /certbot-auto
+	/certbot-auto certonly --standalone --agree-tos -m ${LETSENCRYPT_EMAIL:-"none@example.com"} -d ${PIBOX_DOMAIN}
+	echo "13 6 * * * /certbot-auto renew --quiet --no-self-upgrade" >> mycron
+	crontab mycron
+	rm mycron
+	ln -s /etc/letsencrypt/live/${PIBOX_DOMAIN}/fullchain.pem "$p/ssl.crt"
+	ln -s /etc/letsencrypt/live/${PIBOX_DOMAIN}/privkey.pem "$p/ssl.key"
 else
-    echo "   > A certificate file already exists... [SKIPPING]"
+	if [[ ! -e $p/ssl.key ]] || [[ ! -e $p/ssl.crt ]]
+	then
+		echo -n "   > Creating SSL certificate and key files... "
+		# the generated certificate is also a self-signed CA and can be added to you Trusted CA 
+		# in order to get a "green address bar" in your browser and avoid the ssl warning
+		openssl x509 \
+		    -req -in <(
+		        openssl req \
+		            -days 3650 \
+		            -newkey rsa:4096 \
+		            -nodes \
+		            -keyout "$p/ssl.key" \
+		            -subj "/C=FR/L=Paris/O=Seedboxes/OU=Pibox/CN=${PIBOX_DOMAIN:-"localhost"}"
+		        ) \
+		    -signkey "$p/ssl.key" -sha256 \
+		    -days 3650 \
+		    -extfile <(echo -e "basicConstraints=critical,CA:true,pathlen:0") \
+		    -out "$p/ssl.crt"
+		show_result $?
+
+		chmod 400 $p/ssl.key
+	else
+		echo "   > A certificate file already exists... [SKIPPING]"
+	fi
 fi
 
 echo
