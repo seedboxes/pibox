@@ -3,19 +3,19 @@
 version=0.3.0
 
 # install docker if needed
-command -v docker || curl http://get.docker.com/ | sudo bash
+command -v docker || curl -sSL https://get.docker.com/ | sh
 
 # download seedboxes/pibox image
 docker pull seedboxes/pibox:$version
 
 # remove existing pibox if any
 if [ `docker ps -aq --filter="name=pibox" | wc -l` -eq 1 ]
-then 
+then
     echo -n "Removing container "
     docker rm -f `docker kill $(PIBOX_NAME)`
 fi
 
-# try to guess host public ip + generate a password 
+# try to guess host public ip + generate a password
 HOSTIP="$(ip address show dev eth0 scope global | grep 'inet ' | cut -d'/' -f1 | grep -oE '[0-9\.]*')"
 GENPASS="$(head -c1000 /dev/urandom | tr -dc "0-9A-Za-z" | head -c8)"
 
@@ -44,15 +44,15 @@ echo "
                         ${bgreen} __     __   __      ${rst}
                         ${bgreen}|__) | |__) /  \ \_/ ${rst}
                    Your ${bgreen}|    | |__) \__/ / \ ${rst}has been created
-    
+
            It is accessible through HTTPS and FTP (SFTP coming soon...)
-    
+
                       HTTPS access : ${yellow}https://$HOSTIP/${rst}
                         FTP access : ${yellow}ftp://$HOSTIP/${rst}
-    
+
               Your credentials are printed ${und}just once${rst} below so keep
                    it mind or in a safe place for later use :
-    
+
                                  user : ${red}hadopi${rst}
                              password : ${red}${GENPASS}${rst}
 
