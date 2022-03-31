@@ -106,7 +106,7 @@ echo
 echo "$bwhite ==> SERVICES$rst"
 
 echo -n "   > Starting php... "
-/etc/init.d/php5-fpm start
+/etc/init.d/php7.4-fpm start
 show_result $?
 
 echo -n "   > Starting http server... "

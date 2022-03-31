@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=0.3.0
+version=0.4.0
 
 # install docker if needed
 command -v docker || curl http://get.docker.com/ | sudo bash
@@ -25,7 +25,7 @@ docker run \
     -v ${HOME}/pibox:/opt/rtorrent \
     -p 6980:6980 -p 443:443 -p 21:21 -p 30000-30009:30000-30009 \
     -e PIBOX_FTP=yes -e PIBOX_PUBLICIP="${HOSTIP}" -e PIBOX_PASS="${GENPASS}" \
-       seedboxes/pibox:$version
+       pibox:$version
 
 # the end
 
